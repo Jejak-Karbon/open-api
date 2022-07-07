@@ -37,7 +37,7 @@ func (h *handler) Get(c echo.Context) error {
 		return res.ErrorResponse(err).Send(c)
 	}
 
-	return res.CustomSuccessBuilder(200, result.Datas, "Get users success", &result.PaginationInfo).Send(c)
+	return res.CustomSuccessBuilder(200, result.Datas, "Get news success", &result.PaginationInfo).Send(c)
 }
 
 func (h *handler) GetByID(c echo.Context) error {
