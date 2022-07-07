@@ -6,6 +6,7 @@ import (
 
 	"github.com/born2ngopi/alterra/basic-echo-mvc/database"
 	"github.com/born2ngopi/alterra/basic-echo-mvc/database/migration"
+	"github.com/born2ngopi/alterra/basic-echo-mvc/database/seeder"
 	"github.com/born2ngopi/alterra/basic-echo-mvc/internal/factory"
 	"github.com/born2ngopi/alterra/basic-echo-mvc/internal/http"
 	"github.com/born2ngopi/alterra/basic-echo-mvc/internal/middleware"
@@ -35,7 +36,8 @@ func main() {
 to use this flag:
 	use -migrate=migrate for migrate table
 	use -migrate=rollback for rollback table
-	use -migrate=status for get status migration`,
+	use -migrate=status for get status migration
+	use -migrate=seeder for get status migration`,
 	)
 	flag.Parse()
 
@@ -47,6 +49,9 @@ to use this flag:
 		return
 	} else if m == "status" {
 		migration.Status()
+		return
+	} else if m == "seeder" {
+		seeder.Seed()
 		return
 	}
 
