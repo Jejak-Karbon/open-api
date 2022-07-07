@@ -1,4 +1,4 @@
-package product
+package news
 
 import (
 	"github.com/labstack/echo/v4"
