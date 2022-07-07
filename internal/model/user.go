@@ -11,7 +11,7 @@ import (
 
 type User struct {
 	Model
-
+	ID       uint   `gorm:"primarykey;autoIncrement"`
 	Name     string `json:"name" gorm:"size:200;not null"`
 	Email    string `json:"email" gorm:"size:200;not null;unique"`
 	Password string `json:"password,omitempty"`

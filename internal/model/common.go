@@ -1,13 +1,16 @@
 package model
 
 import (
-	"gorm.io/gorm"
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Model struct {
-	ID        uint `gorm:"primarykey;autoIncrement"`
 	CreatedAt time.Time
+	CreatedBy uint
 	UpdatedAt time.Time
+	UpdatedBy uint
 	DeletedAt gorm.DeletedAt `gorm:"index"`
+	DeletedBy uint
 }
