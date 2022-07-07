@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"gorm.io/driver/mysql"
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -18,10 +17,6 @@ type (
 	}
 
 	mysqlConfig struct {
-		dbConfig
-	}
-
-	postgresqlConfig struct {
 		dbConfig
 	}
 )
@@ -38,23 +33,6 @@ func (conf mysqlConfig) Connect() {
 	var err error
 
 	dbConn, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-}
-
-func (conf postgresqlConfig) Connect() {
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta",
-		conf.User,
-		conf.Pass,
-		conf.Host,
-		conf.Port,
-		conf.Name,
-	)
-
-	var err error
-
-	dbConn, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
