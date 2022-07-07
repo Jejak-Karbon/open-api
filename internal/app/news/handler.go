@@ -1,4 +1,4 @@
-package product
+package news
 
 import (
 	"fmt"
@@ -37,7 +37,7 @@ func (h *handler) Get(c echo.Context) error {
 		return res.ErrorResponse(err).Send(c)
 	}
 
-	return res.CustomSuccessBuilder(200, result.Datas, "Get users success", &result.PaginationInfo).Send(c)
+	return res.CustomSuccessBuilder(200, result.Datas, "Get news success", &result.PaginationInfo).Send(c)
 }
 
 func (h *handler) GetByID(c echo.Context) error {
@@ -61,7 +61,7 @@ func (h *handler) GetByID(c echo.Context) error {
 
 func (h *handler) Create(c echo.Context) error {
 
-	payload := new(dto.CreateProductRequest)
+	payload := new(dto.CreateNewsRequest)
 	if err := c.Bind(payload); err != nil {
 		return res.ErrorBuilder(&res.ErrorConstant.BadRequest, err).Send(c)
 	}
@@ -80,7 +80,7 @@ func (h *handler) Create(c echo.Context) error {
 }
 
 func (h *handler) Update(c echo.Context) error {
-	payload := new(dto.UpdateProductRequest)
+	payload := new(dto.UpdateNewsRequest)
 	if err := c.Bind(payload); err != nil {
 		fmt.Println("bind", err.Error())
 		return res.ErrorBuilder(&res.ErrorConstant.BadRequest, err).Send(c)
@@ -96,16 +96,6 @@ func (h *handler) Update(c echo.Context) error {
 	if err != nil {
 		return res.ErrorBuilder(&res.ErrorConstant.BadRequest, err).Send(c)
 	}
-
-	// param := new(dto.ByIDRequest)
-	// if err := c.Bind(param); err != nil {
-	// 	fmt.Println("bind id", err.Error())
-	// 	return res.ErrorBuilder(&res.ErrorConstant.BadRequest, err).Send(c)
-	// }
-	// if err := c.Validate(param); err != nil {
-	// 	response := res.ErrorBuilder(&res.ErrorConstant.Validation, err)
-	// 	return response.Send(c)
-	// }
 
 	result, err := h.service.Update(c.Request().Context(), uint(ID), payload)
 	if err != nil {
