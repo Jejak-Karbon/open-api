@@ -11,7 +11,7 @@ func newsTableSeeder(conn *gorm.DB) {
 
 	var news = []model.News{}
 
-	for i := 0; i < 15; i++ {
+	for i := 0; i < 2; i++ {
 		news = append(news, model.News{Title: "News", Description: "News Description", Image: "-", IsActive: 1})
 	}
 
