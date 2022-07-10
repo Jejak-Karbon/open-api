@@ -110,13 +110,13 @@ func (h *handler) Create(c echo.Context) error {
 		log.Fatal(err)
 	}
 
-	file_destination := "news/"+str.GenerateRandString(10)+upload.Filename
+	file_destination := str.GenerateRandString(10)+upload.Filename
 
 	upInput := &s3manager.UploadInput{
 		Bucket:      aws.String(os.Getenv("AWS_BUCKET")), // bucket's name
 		Key:         aws.String(file_destination),        // files destination location
 		Body:        bytes.NewReader(file),               // content of the file
-		ContentType: aws.String("file/pdf"),              // content type
+		ContentType: aws.String(upload.Header["Content-Type"][0]),              // content type
 	}
 
 	resp, err := uploader.UploadWithContext(context.Background(), upInput)
