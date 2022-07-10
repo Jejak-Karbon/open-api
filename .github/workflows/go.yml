@@ -52,4 +52,6 @@ jobs:
           cd ~/apps/open-api
           git checkout development
           git pull
+          docker build -t jejakkarbon/open-api .
+          docker run --network="host" -d jejakkarbon/open-api:latest
 
