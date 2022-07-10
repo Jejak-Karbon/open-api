@@ -18,7 +18,7 @@ type service struct {
 type Service interface {
 	Find(ctx context.Context, payload *dto.SearchGetRequest) (*dto.SearchGetResponse[model.News], error)
 	FindByID(ctx context.Context, payload *dto.ByIDRequest) (*model.News, error)
-	Create(ctx context.Context, payload *dto.CreateNewsRequest) (string, error)
+	Create(ctx context.Context, img string, payload *dto.CreateNewsRequest) (string, error)
 	Update(ctx context.Context, ID uint, payload *dto.UpdateNewsRequest) (string, error)
 	Delete(ctx context.Context, ID uint) (*model.News, error)
 }
@@ -56,18 +56,18 @@ func (s *service) FindByID(ctx context.Context, payload *dto.ByIDRequest) (*mode
 	return &data, nil
 }
 
-func (s *service) Create(ctx context.Context, payload *dto.CreateNewsRequest) (string, error) {
+func (s *service) Create(ctx context.Context,img string, payload *dto.CreateNewsRequest) (string, error) {
 
 	var News = model.News{
 		Title:       payload.Title,
-		Image:       payload.Image,
+		Image:       img,
 		Description: payload.Description,
 		IsActive:    payload.IsActive,
 	}
 
-	err := s.NewsRepository.Create(ctx, News)
-	if err != nil {
-		return "", res.ErrorBuilder(&res.ErrorConstant.InternalServerError, err)
+	err2 := s.NewsRepository.Create(ctx, News)
+	if err2 != nil {
+		return "", res.ErrorBuilder(&res.ErrorConstant.InternalServerError, err2)
 	}
 
 	return "success", nil
