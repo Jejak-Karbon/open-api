@@ -2,7 +2,7 @@ package dto
 
 type CreateNewsRequest struct {
 	Title       string `json:"title" form:"title" validate:"required"`
-	Image       string `json:"image" form:"image" validate:"required"`
+	Image       string `json:"image" form:"image"`
 	Description string `json:"description" form:"description"`
 	IsActive    int    `json:"is_active" form:"is_active" validate:"required"`
 }
