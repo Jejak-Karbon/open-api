@@ -1,4 +1,4 @@
-name: Go-CI
+name: Go-CI/CD
 
 on:
   push:
@@ -40,4 +40,18 @@ jobs:
 
     - name: Test
       run: go test -race -vet=off ./...
+
+    - name: Deploy Go
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          cd ~/apps/open-api
+          git checkout development
+          git pull
+          docker build -t jejakkarbon/open-api .
+          docker run --network="host" -d jejakkarbon/open-api:latest
 
