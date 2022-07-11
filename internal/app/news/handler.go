@@ -112,11 +112,14 @@ func (h *handler) Create(c echo.Context) error {
 
 	file_destination := str.GenerateRandString(10) + upload.Filename
 
+	var aclPublicRead = "public-read"
+	
 	upInput := &s3manager.UploadInput{
-		Bucket:      aws.String(os.Getenv("AWS_BUCKET")),          // bucket's name
-		Key:         aws.String(file_destination),                 // files destination location
-		Body:        bytes.NewReader(file),                        // content of the file
-		ContentType: aws.String(upload.Header["Content-Type"][0]), // content type
+		Bucket:      aws.String(os.Getenv("AWS_BUCKET")), // bucket's name
+		Key:         aws.String(file_destination),        // files destination location
+		Body:        bytes.NewReader(file),               // content of the file
+		ACL:	&aclPublicRead,
+		ContentType: aws.String(upload.Header["Content-Type"][0]),              // content type
 	}
 
 	resp, err := uploader.UploadWithContext(context.Background(), upInput)
