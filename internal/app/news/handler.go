@@ -1,22 +1,22 @@
 package news
 
 import (
-	"context"
-	"os"
 	"bytes"
+	"context"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
 	_ "net/http"
-	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/born2ngopi/alterra/basic-echo-mvc/internal/dto"
 	"github.com/born2ngopi/alterra/basic-echo-mvc/internal/factory"
-	res "github.com/born2ngopi/alterra/basic-echo-mvc/pkg/util/response"
 	aws_util "github.com/born2ngopi/alterra/basic-echo-mvc/pkg/util/aws"
+	res "github.com/born2ngopi/alterra/basic-echo-mvc/pkg/util/response"
 	"github.com/born2ngopi/alterra/basic-echo-mvc/pkg/util/str"
-	
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 
@@ -82,7 +82,7 @@ func (h *handler) Create(c echo.Context) error {
 		return response.Send(c)
 	}
 
-	upload,_ := c.FormFile("image")
+	upload, _ := c.FormFile("image")
 
 	src, err := upload.Open()
 	if err != nil {
@@ -110,7 +110,7 @@ func (h *handler) Create(c echo.Context) error {
 		log.Fatal(err)
 	}
 
-	file_destination := str.GenerateRandString(10)+upload.Filename
+	file_destination := str.GenerateRandString(10) + upload.Filename
 
 	var aclPublicRead = "public-read"
 	
@@ -128,7 +128,7 @@ func (h *handler) Create(c echo.Context) error {
 
 	img := resp.Location
 
-	result, err := h.service.Create(c.Request().Context(),img, payload)
+	result, err := h.service.Create(c.Request().Context(), img, payload)
 	if err != nil {
 		return res.ErrorResponse(err).Send(c)
 	}

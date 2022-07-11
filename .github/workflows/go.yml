@@ -21,16 +21,16 @@ jobs:
       run: go mod verify
 
     - name: Build
-      run: go build -v ./...
+      run: go build -v ./main.go
       
     - name: Run go vet
       run: go vet ./...
       
-    - name: Install staticcheck
-      run: go install honnef.co/go/tools/cmd/staticcheck@latest
+    # - name: Install staticcheck
+    #   run: go install honnef.co/go/tools/cmd/staticcheck@latest
 
-    - name: Run staticcheck
-      run: staticcheck ./...
+    # - name: Run staticcheck
+    #   run: staticcheck ./...
 
     - name: Install golint
       run: go install golang.org/x/lint/golint@latest
@@ -52,6 +52,7 @@ jobs:
           cd ~/apps/open-api
           git checkout development
           git pull
+          docker rm $(docker stop $(docker ps -a -q --filter ancestor=jejakkarbon/open-api --format="{{.ID}}"))
           docker build -t jejakkarbon/open-api .
           docker run --network="host" -d jejakkarbon/open-api:latest
 
